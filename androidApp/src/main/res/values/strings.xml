@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Search…</string>
+    <string name="close_search">Close search</string>
+    <string name="open_search">Open search</string>
+    <string name="delete_note">Delete note</string>
+    <string name="add_note">Add note</string>
+    <string name="all_notes">All Notes</string>
+</resources>
