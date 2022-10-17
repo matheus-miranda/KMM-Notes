@@ -90,16 +90,18 @@ class NoteDetailViewModel @Inject constructor(
 
     fun saveNote() {
         viewModelScope.launch {
-            noteDataSource.insertNote(
-                Note(
-                    id = existingNoteId,
-                    title = noteTitle.value,
-                    content = noteContent.value,
-                    colorHex = noteColor.value,
-                    created = DateTimeUtil.now()
+            if (noteTitle.value.isNotBlank() || noteContent.value.isNotBlank()) {
+                noteDataSource.insertNote(
+                    Note(
+                        id = existingNoteId,
+                        title = noteTitle.value,
+                        content = noteContent.value,
+                        colorHex = noteColor.value,
+                        created = DateTimeUtil.now()
+                    )
                 )
-            )
-            _hasNoteBeenSaved.value = true
+                _hasNoteBeenSaved.value = true
+            }
         }
     }
 }
