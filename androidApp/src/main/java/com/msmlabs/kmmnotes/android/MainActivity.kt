@@ -17,6 +17,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.msmlabs.kmmnotes.android.notedetail.NoteDetailScreen
 import com.msmlabs.kmmnotes.android.notelist.NoteListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -65,7 +71,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NotesApplicationTheme {
-                NoteListScreen()
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = NOTE_LIST_SCREEN) {
+                    composable(route = NOTE_LIST_SCREEN) {
+                        NoteListScreen(navController = navController)
+                    }
+                    composable(
+                        route = "$NOTE_DETAIL_SCREEN/{$NOTE_ID_ARGUMENT}",
+                        arguments = listOf(
+                            navArgument(name = NOTE_ID_ARGUMENT) {
+                                type = NavType.LongType
+                                defaultValue = -1L
+                            }
+                        )
+                    ) { backStackEntry ->
+                        val noteId = backStackEntry.arguments?.getLong(NOTE_ID_ARGUMENT) ?: -1L
+                        NoteDetailScreen(noteId = noteId, navController = navController)
+                    }
+                }
             }
         }
     }
