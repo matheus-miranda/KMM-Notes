@@ -30,6 +30,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.msmlabs.kmmnotes.android.NOTE_DETAIL_SCREEN
 import com.msmlabs.kmmnotes.android.R
 import com.msmlabs.kmmnotes.android.notelist.composables.HideableSearchTextField
 import com.msmlabs.kmmnotes.android.notelist.composables.NoteItem
@@ -37,6 +39,7 @@ import com.msmlabs.kmmnotes.android.notelist.composables.NoteItem
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NoteListScreen(
+    navController: NavController,
     viewModel: NoteListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -48,7 +51,7 @@ fun NoteListScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate("$NOTE_DETAIL_SCREEN/-1L") },
                 backgroundColor = Color.Black
             ) {
                 Icon(
@@ -95,7 +98,7 @@ fun NoteListScreen(
                     NoteItem(
                         note = note,
                         backgroundColor = Color(note.colorHex),
-                        onNoteClickedListener = { /*TODO*/ },
+                        onNoteClickedListener = { navController.navigate("$NOTE_DETAIL_SCREEN/${note.id}") },
                         onDeleteClickedListener = { viewModel.deleteNoteById(note.id!!) },
                         modifier = Modifier
                             .fillMaxWidth()
