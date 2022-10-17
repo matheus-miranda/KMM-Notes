@@ -3,6 +3,7 @@ package com.msmlabs.kmmnotes.android.notedetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.msmlabs.kmmnotes.android.NOTE_ID_ARGUMENT
 import com.msmlabs.kmmnotes.android.TIMEOUT_FIVE_SECONDS
 import com.msmlabs.kmmnotes.domain.note.Note
 import com.msmlabs.kmmnotes.domain.note.NoteDataSource
@@ -21,7 +22,6 @@ private const val TITLE_FOCUSED_KEY = "isNoteTitleFocused"
 private const val CONTENT_KEY = "noteContent"
 private const val CONTENT_FOCUSED_KEY = "isNoteContentFocused"
 private const val COLOR_KEY = "noteColor"
-private const val NOTE_ID_KEY = "noteId"
 
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
@@ -57,7 +57,7 @@ class NoteDetailViewModel @Inject constructor(
     private var existingNoteId: Long? = null
 
     init { // load note if id already exists
-        savedStateHandle.get<Long>(NOTE_ID_KEY)?.let { existingNoteId ->
+        savedStateHandle.get<Long>(NOTE_ID_ARGUMENT)?.let { existingNoteId ->
             if (existingNoteId == -1L) {
                 return@let
             }
