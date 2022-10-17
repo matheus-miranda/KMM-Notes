@@ -3,6 +3,7 @@ package com.msmlabs.kmmnotes.android.notelist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.msmlabs.kmmnotes.android.TIMEOUT_FIVE_SECONDS
 import com.msmlabs.kmmnotes.domain.note.Note
 import com.msmlabs.kmmnotes.domain.note.NoteDataSource
 import com.msmlabs.kmmnotes.domain.note.SearchNoteUseCase
@@ -16,7 +17,6 @@ import javax.inject.Inject
 private const val NOTES_KEY = "notes"
 private const val SEARCH_TEXT_KEY = "searchText"
 private const val SEARCH_ACTIVE_KEY = "searchActive"
-private const val TIMEOUT_MILLIS = 5000L
 
 @HiltViewModel
 class NoteListViewModel @Inject constructor(
@@ -36,7 +36,7 @@ class NoteListViewModel @Inject constructor(
             searchText = searchText,
             isSearchActive = isSearchActive
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), NoteListState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(TIMEOUT_FIVE_SECONDS), NoteListState())
 
     fun loadNotes() {
         viewModelScope.launch {
